@@ -6,24 +6,27 @@ const Pets = () => {
   const [petsData, setPetsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await fetch('http://localhost:4000/approvedPets')
+        const BASE_URL = process.env.REACT_APP_API_URL;
+        const response = await fetch(`${BASE_URL}/approvedPets`);
         if (!response.ok) {
-          throw new Error('An error occurred')
+          throw new Error("An error occurred");
         }
-        const data = await response.json()
-        setPetsData(data)
+        const data = await response.json();
+        setPetsData(data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
     fetchRequests();
-  }, [])
+  }, []);
+
 
   const filteredPets = petsData.filter((pet) => {
     if (filter === "all") {
